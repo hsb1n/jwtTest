@@ -1,0 +1,88 @@
+_actions, _reducers - Redux를 위한 폴더들
+
+components / view -> 이 안에 page들을 넣는다.
+components / Sections -> 해당 페이지에 관련된 css, components을 넣는다.
+
+App.js - Routing 관련된 일 처리
+Config.js - 환경 변수 같은 것들을 정하는 곳
+
+hoc - Higher Order Component의 약자 (Auth)
+    유저가 해당 페이지에 들어갈 자격이 되는지를 알아낸 후에
+    자격이 된다면 Admin Component에 가게 해주고 아니면 다른 페이지로 보낸다.
+utils - 여러 군데에서 쓰일 수 있는 것들을 이곳에 넣어둬서 어디서든 쓸 수 있게
+
+
+ <Route exact path="/">
+          <LandingPage />
+        </Route>를 깔끔하게 작성하는 법
+        <Route exact path="/" component={LandingPage}/>
+
+request할때 client가 없어서 postman으로 보냈으나
+이젠 client가 있으니 request할때 Axios Jquery를 사용해서 보냄 -> AJAX
+npm install axios --save
+
+두 개의 다른 포트를 가진 서버는 아무 설정 없이 req를 보낼 수 없다.
+(cors 정책에 의해 막힘 - 보안성 문제)
+여러가지 해결법 중 Proxy 사용하는 방법으로
+https://create-react-app.dev/docs/proxying-api-requests-in-development
+
+클라이언트 터미널에 npm install http-proxy-middleware  --save
+
+src/ setupProxy.js 를 만든다.
+
+바뀐 버전의 코드
+const { createProxyMiddleware } = require('http-proxy-middleware');
+
+module.exports = function (app) {
+    app.use(
+        '/api',
+        createProxyMiddleware({
+            target: 'http://localhost:5000',
+            changeOrigin: true,
+        })
+    );
+};
+
+프록시 서버 사용 이유
+- 방화벽 기능, 웹 필터 기능, 캐쉬 데이터 공유 데이터 제공
+
+- 인터넷 사용 제어, 캐쉬를 이용해 더 빠른 인터넷, 보안 제공
+- 이용 제한된 사이트 접근 가능
+
+concurrently를 이용해 프론트서버, 백서버 한번에 키기
+npm install concurrently --save
+
+react css framework
+
+material ui
+react bootstrap
+semantic ui
+ant design thㅡ기가 굉장히 편함
+metarialize
+
+//redux란 상태관리 라이브러리
+// 컴포넌트간에 무언가를 주고 받을때는 props를 이용한다.
+// 컴포넌트 안에서 데이터를 전달할땐 state , 리렌더링 가능
+// action은 객체 -> 무엇이 되었는지 설명하는 객체
+// reducer는 이전 state와 action object를 받은 후에 next state를 리턴한다.
+// store는 application의 state을 감싸주는 역할
+
+redux를 사용하기 전
+redux, react-redux, (redux-promise, redux-thunk)- 미들웨어 
+dependency를 받아준다.
+
+redux-푸롸밋 - 리덕스를 잘 쓸수 있게 도와주는 역할
+store 안에 모든 state을 관리/ state을 변경하고 싶을땐 dispatch를 이용해서 action으로 변경
+
+
+redux-썽크 - 디스패치한테 어떻게 함수를 받는 방법을 알려줌
+
+아무나 진입 가능한 페이지 랜딩, 어바웃
+로그인한 회원만 진입가능 페이지 디테일
+로그인한 회원은 진입 못하는 페이지 레지스터, 로그인
+
+관리자만 진입가능 어드민 
+
+댓글 작성, 파일 전송, 파일 업로드 등등 인증하려면?
+HOC
+

@@ -1,25 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import LandingPage from './components/views/LandingPage/LandingPage';
+import LoginPage from './components/views/LoginPage/LoginPage';
+import RegisterPage from './components/views/RegisterPage/RegisterPage';
+import Auth from './hoc/auth'
 function App() {
   return (
+    <Router>
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Hello
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Switch>
+        {/* Auth로 컴포넌트를 감싸준다 */}
+       <Route exact path="/" component={Auth(LandingPage,null )}/>
+        <Route exact path ="/login" component={Auth(LoginPage,false)}/>
+        <Route exact path="/register" component={Auth(RegisterPage,false)}/>
+      </Switch>
     </div>
+    </Router>
   );
 }
 

@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const port = 5000
+
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 
@@ -24,6 +24,12 @@ mongoose.connect(config.mongoURI, {
     .catch(err => console.log(err))
 
 app.get('/', (req, res) => res.send('안녕ㅋㅋ난ㅋㅋ'))
+
+// client의 LandingPage
+app.get('/api/hello', (req,res)=>{
+    res.send('안뇽')
+})
+
 
 app.post('/api/users/register', (req, res) => {
     //회원가입할때 필요한 정보들을 client에서 가져오면
@@ -83,6 +89,7 @@ app.get('/api/users/auth',auth, (req,res)=>{
         image: req.user.image
     })
 })
+
 app.get('/api/users/logout', auth, (req,res)=>{
     User.findOneAndUpdate({_id: req.user._id },
         {token: ""}
@@ -95,4 +102,6 @@ app.get('/api/users/logout', auth, (req,res)=>{
         
         )
 })
+
+const port = 5000
 app.listen(port, () => console.log(`Example app listening on port ${port}! `))
